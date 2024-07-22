@@ -1,0 +1,116 @@
+package org.sukriyesahin.quickstay.model.user;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Entity
+@Table(name="user")
+@Data
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @Size(min = 5, max = 50)
+    @Column(unique = true, nullable = true)
+    private String username;
+
+    @NotNull
+    @Email
+    @Column(unique = true, nullable = true)
+    private String email;
+
+    @NotNull
+    @Column(nullable = false)
+    private String firstName;
+
+    @NotNull
+    @Column(nullable = false)
+    private String lastName;
+
+    @NotNull
+    @Column(nullable = false)
+    private String password;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Guest> guests = new HashSet<>();
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @Column(nullable = false, updatable = false)
+    private LocalDate creationDate;
+
+    @Column(name = "account_non_locked", nullable = false)
+    private boolean accountNonLocked;
+
+    @NotNull
+    @Column(nullable = false)
+    private Boolean enabled;
+
+    @Column(name = "failed_attempt", nullable = false)
+    private int failedAttempt;
+
+    @Column(name = "lock_time")
+    private LocalDate lockTime;
+
+    @Column(name = "activation_token", length = 64, nullable = false)
+    private String activation_token;
+
+    @PrePersist
+    protected void onCreate() {
+        this.activation_token = UUID.randomUUID().toString();
+        this.creationDate = LocalDate.now();
+        this.enabled = false;
+        this.accountNonLocked = true;
+        this.failedAttempt = 0;
+        this.lockTime = null;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toSet());
+    }
+
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // add logic to manage this
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // add logic to manage this
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+}
