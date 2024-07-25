@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${hotel.name} + ' - QuickStay'">Hotel Details - QuickStay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/hotel-details.css}">
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a th:href="@{/}" class="logo">QuickStay</a>
+        <div class="nav-actions">
+            <!-- Show if NOT authenticated -->
+            <div sec:authorize="!isAuthenticated()" class="auth-links">
+                <a th:href="@{/login}">Sign in</a>
+                <a th:href="@{/register}" class="register-button">Register</a>
+            </div>
+            <!-- Show if authenticated -->
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <button class="dropbtn">
+                    <i class="fa fa-user"></i>
+                    <span sec:authentication="name">Username</span>
+                </button>
+                <div class="dropdown-content">
+                    <a th:href="@{/my-reservations}">My Reservations</a>
+                    <a th:href="@{/edit-account}">Edit My Account</a>
+                    <a th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hotel-details-container">
+    <div class="hotel-header">
+        <div class="hotel-info">
+            <h1 th:text="${hotel.name}">Hotel Name</h1>
+            <p th:text="${hotel.location}">Hotel Location</p>
+            <div class="check-in-out">
+                <p>Check-in from: <span th:text="${hotel.checkInTime}"></span>, Check-out until: <span th:text="${hotel.checkOutTime}"></span></p>
+                <p>Stay dates:
+                    <span th:text="${#temporals.format(hotel.userCheckInDate, 'yyyy-MM-dd')}"></span>
+                    to
+                    <span th:text="${#temporals.format(hotel.userCheckOutDate, 'yyyy-MM-dd')}"></span>
+                </p>
+            </div>
+        </div>
+        <div class="hotel-ratings">
+            <div class="star-rating">
+            <span th:each="star, iterStat : ${#numbers.sequence(1, 5)}">
+                <i th:class="${star <= hotel.avgRating ? 'fa fa-star' : 'fa fa-star-o'}" aria-hidden="true"></i>
+            </span>
+                <span class="num-reviews" th:text="'(' + ${hotel.numReviews} + ' reviews)'"> (0 reviews)</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="available-rooms">
+        <h2>Available Rooms</h2>
+        <div class="room-listing">
+            <div th:each="room : ${hotel.rooms}" class="room-card">
+                <img th:if="${room.imageId}" th:src="@{|/image/${room.imageId}|}" alt="Room Image" onerror="this.src='/images/no_image_available.png';"/>
+                <img th:unless="${room.imageId}" src="/images/no_image.jpg" alt="No Image Available"/>
+                <div class="room-info">
+                    <p th:text="'Room Number: ' + ${room.number}">Room Number</p>
+                    <p th:text="'Cost per Night: $' + ${room.costPerNight}">Cost per Night</p>
+                    <ul>
+                        <li th:each="feature : ${room.features}">
+                            <span th:text="${feature.name}">Feature Name</span>
+                        </li>
+                    </ul>
+                    <button class="reserve-btn"
+                            th:attr="data-room-id=${room.id},
+                                     data-checkin=${#temporals.format(hotel.userCheckInDate, 'yyyy-MM-dd')},
+                                     data-checkout=${#temporals.format(hotel.userCheckOutDate, 'yyyy-MM-dd')},
+                                     data-adults=${adults},
+                                     data-children=${children}">
+                        Reserve Now
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hotel-reviews">
+    <h2>Guest Reviews</h2>
+    <div th:each="review : ${hotel.reviews}" class="review-card">
+        <p class="review-author" th:text="'- ' + ${review.author}">Review author goes here...</p>
+        <p class="review-text" th:text="${review.review}">Review content goes here...</p>
+        <div class="review-rating">
+            <i th:each="i : ${#numbers.sequence(1,5)}" th:class="${i <= review.rating ? 'fa fa-star' : 'fa fa-star-o'}"></i>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p>Email: info@quickstay.com</p>
+            <p>Phone: +1-555-123-4567</p>
+        </div>
+        <ul class="social-links">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+        <div class="copyright">
+            <p>© 2024 QuickStay. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.reserve-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const roomId = this.getAttribute('data-room-id');
+                const checkInDate = this.getAttribute('data-checkin');
+                const checkOutDate = this.getAttribute('data-checkout');
+                const adults = this.getAttribute('data-adults');
+                const children = this.getAttribute('data-children');
+
+                const url = `/reservation/${roomId}?checkInDate=${checkInDate}&checkOutDate=${checkOutDate}&adults=${adults}&children=${children}`;
+                window.location.href = url;
+            });
+        });
+    });
+
+</script>
+</body>
+</html>

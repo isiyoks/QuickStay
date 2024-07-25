@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Activate Your Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/activate.css}">
+</head>
+<body>
+<div class="container">
+    <div class="activation-content">
+        <h1>Activate Your Account</h1>
+        <p th:if="${message}" th:text="${message}" class="message"></p>
+        <p th:if="${error}" th:text="${error}" class="error"></p>
+        <div th:if="${registeredUser}" class="user-info">
+            <p>Hi <span th:text="${registeredUser.firstName}">User</span>, your account has been created. Please activate your account using the link sent to your email.</p>
+            <form th:action="@{/resend-activation}" method="post">
+                <input type="hidden" th:value="${registeredUser.email}" name="email"/>
+                <button type="submit" class="btn-primary">Resend Activation Link</button>
+            </form>
+        </div>
+        <a th:href="@{/login}" class="login-link">Go to Login</a>
+    </div>
+</div>
+</body>
+</html>

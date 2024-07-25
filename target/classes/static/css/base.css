@@ -1,0 +1,64 @@
+/* base.css */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #F4F4F4;
+    color: #333;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #008080;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    border-radius: 5px;
+    padding: 10px 20px;
+    border: none;
+    display: inline-block;
+}
+
+input, button {
+    margin-top: 10px;
+}
+
+.container {
+    display: flex;
+    /*height: 100vh;*/
+    align-items: center;
+    justify-content: center;
+    /*width: 90%;*/
+    margin: 0 auto;
+}
+
+.error {
+    color: #ff0000; /* Red color for errors */
+    font-size: 16px; /* Suitable font size for readability */
+    font-weight: bold; /* Makes the error text bold */
+    margin: 10px 0; /* Adds space around the error message */
+    padding: 5px; /* Padding inside the error message area */
+    border: 1px solid #ff0000; /* Optional: adds a red border around the error message */
+    background-color: #ffe5e5; /* Optional: light red background for high contrast */
+}
+
+.message {
+    color: #333; /* Dark text color for readability */
+    background-color: #fffae6; /* Light yellow background */
+    padding: 10px 15px; /* Padding for better spacing */
+    margin: 10px 0; /* Vertical spacing */
+    border: 1px solid #ffd700; /* Slightly darker yellow border for emphasis */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    font-size: 16px; /* Suitable font size for readability */
+    text-align: center; /* Center-align the text */
+}
+

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results - QuickStay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/result.css}">
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a th:href="@{/}" class="logo">QuickStay</a>
+        <div class="nav-actions">
+            <!-- Show if NOT authenticated -->
+            <div sec:authorize="!isAuthenticated()" class="auth-links">
+                <a th:href="@{/login}">Sign in</a>
+                <a th:href="@{/register}" class="register-button">Register</a>
+            </div>
+            <!-- Show if authenticated -->
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <button class="dropbtn">
+                    <i class="fa fa-user"></i>
+                    <span sec:authentication="name">Username</span>
+                </button>
+                <div class="dropdown-content">
+                    <a th:href="@{/my-reservations}">My Reservations</a>
+                    <a th:href="@{/edit-account}">Edit My Account</a>
+                    <a th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="search-container">
+    <form th:action="@{/search}" method="get" th:object="${searchDTO}" id="searchForm">
+        <div class="search-box">
+            <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">
+            <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">
+            <input type="text" placeholder="Destination" th:field="*{destination}" id="destination">
+            <ul id="suggestions"></ul>
+            <input type="text" placeholder="Check-in & Check-out" th:field="*{dateRange}" id="date-range">
+            <button type="button" class="guest-button" onclick="toggleGuestSelector()">Select Guests</button>
+            <div id="guest-selector">
+                <div class="guest-section">
+                    <label>Adults</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('adults', -1)">-</button>
+                        <input type="text" id="adults" th:field="*{adults}" th:value="${#objects.nullSafe(searchDTO.adults, 2)}" readonly> <!--- Updated -->
+                        <button type="button" onclick="adjustCount('adults', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-section">
+                    <label>Children</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('children', -1)">-</button>
+                        <input type="text" id="children" th:field="*{children}" th:value="${#objects.nullSafe(searchDTO.children, 0)}" readonly> <!--- Updated -->
+                        <button type="button" onclick="adjustCount('children', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-section">
+                    <label>Rooms</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('rooms', -1)">-</button>
+                        <input type="text" id="rooms" th:field="*{rooms}" th:value="${#objects.nullSafe(searchDTO.rooms, 1)}" readonly> <!--- Updated -->
+                        <button type="button" onclick="adjustCount('rooms', 1)">+</button>
+                    </div>
+                </div>
+                <button type="button" class="guest-button" onclick="toggleGuestSelector()">Done</button>
+            </div>
+            <button type="button" class="search-button" onclick="submitSearchForm()">Search</button>
+        </div>
+    </form>
+</div>
+<div class="results-container">
+    <div th:each="hotel : ${hotels}">
+        <div class="result-card">
+<!--            <img th:src="@{|/image/${hotel.imageId}|}" alt="Hotel Image">-->
+            <div class="result-details">
+                <h3 th:text="${hotel.name}">Hotel Name</h3>
+                <p th:text="${#objects.nullSafe(hotel.city, '')} +
+                       ', ' +
+                       ${#objects.nullSafe(hotel.state, '')} +
+                       ', ' +
+                       ${#objects.nullSafe(hotel.country, '')}">Hotel Location</p>
+                <p th:text="'Nights: ' + ${searchDTO.checkOutDate.toEpochDay() - searchDTO.checkInDate.toEpochDay()}">Nights</p> <!--- Calculate nights -->
+                <div class="rating">
+                    <span th:text="${#numbers.formatDecimal(hotel.avgRating, 1, 2)}">0.00</span>
+                    <span class="num-reviews" th:text="'(' + ${#objects.nullSafe(hotel.numReviews, 0)} + ' reviews)'"> (0 reviews)</span>
+                </div>
+            </div>
+            <div class="result-actions">
+                <a th:href="@{|/map/${hotel.id}|}" style="background-color: #008080; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none;">
+                    <i class="fas fa-map-marker-alt"></i> Show on map
+                </a>
+                <button th:onclick="|window.location.href='@{/availability/{hotelId}(hotelId=${hotel.id}, checkInDate=${searchDTO.checkInDate}, checkOutDate=${searchDTO.checkOutDate}, adults=${searchDTO.adults}, children=${searchDTO.children})}'|">
+                    See Availability
+                </button>
+            </div>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p>Email: info@quickstay.com</p>
+            <p>Phone: +1-555-123-4567</p>
+        </div>
+        <ul class="social-links">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+        <div class="copyright">
+            <p>© 2024 QuickStay. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script>
+    function submitSearchForm() {
+        var form = document.getElementById("searchForm");
+        var destination = document.getElementById("destination").value;
+        var dateRange = document.getElementById("date-range").value;
+        var adults = document.getElementById("adults").value;
+        var children = document.getElementById("children").value;
+        var rooms = document.getElementById("rooms").value;
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+
+        var params = new URLSearchParams({
+            destination: destination,
+            dateRange: dateRange,
+            adults: adults,
+            children: children,
+            rooms: rooms,
+            latitude: latitude,
+            longitude: longitude
+        });
+
+        window.location.href = form.action + "?" + params.toString();
+    }
+</script>
+<script th:src="@{/js/index.js}"></script>
+</div>
+</body>
+</html>

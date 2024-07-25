@@ -1,0 +1,108 @@
+@import url('base.css'); /* Importing base styles */
+
+.login-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 65%; /* Adjust based on your layout needs */
+    margin: auto;
+}
+
+.login-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0;
+}
+
+.login-image img.full-width {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.login-panel {
+    flex: 1;
+    padding: 20px;
+    max-width: 400px; /* Restricting the width of the form */
+}
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    /* Adjust icon color for grayscale effect */
+    filter: grayscale(100%);
+    opacity: 0.5; /* Adjust the visibility to be more subtle */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;  /* This ensures items in this div are stacked vertically */
+    align-items: flex-start; /* Aligns items to the left */
+    margin-bottom: 20px;     /* Adds space between each input group */
+}
+
+.input-group input[type="text"],
+.input-group input[type="password"],
+.input-group input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.error-message {
+    color: red;
+    font-size: small;
+    width: 100%; /* Ensures the error message does not overflow the input group width */
+    margin-top: 5px; /* Space between the input field and the error message */
+}
+
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .login-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .login-image,
+    .login-panel {
+        width: 100%; /* Full width on smaller screens */
+        max-width: 500px; /* Max width for larger devices */
+        margin-bottom: 20px;
+    }
+}
+
+
+.login-button {
+    background-color: #008080; /* Primary color */
+    color: white;
+    width: 100%;
+    border: none;
+    padding: 12px 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.forgot-password, .signup {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+

@@ -1,0 +1,31 @@
+.activation-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.user-info {
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #008080; /* Teal color */
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 10px 20px;
+    width: 100%;
+    display: block;
+    margin-top: 20px;
+}
+
+.login-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #008080; /* Teal color */
+    font-weight: bold;
+}

@@ -1,0 +1,414 @@
+.container {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 24px;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif; /* Using the imported font */
+}
+
+/* ------- Navbar Styling ------- */
+.navbar {
+    background-color: #00897B;
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 70px;
+    display: flex;             /* Enable flexbox on the navbar */
+    justify-content: space-between; /* Distribute space between logo and buttons */
+    align-items: center;       /* Vertically center items */
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Limit container width for better readability */
+    margin: 0 auto;
+    padding: 0 1rem; /* Add padding for better spacing on smaller screens */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 600; /* Use a bolder font weight */
+    text-decoration: none;
+    color: white;
+}
+
+/* Navigation Links (Not used in provided HTML, but included for completeness) */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Align nav links horizontally */
+}
+
+.nav-list li {
+    margin-left: 1.5rem; /* Space between nav links */
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600; /* Make nav links slightly bolder */
+    transition: color 0.3s ease; /* Add a smooth color transition */
+}
+
+.nav-list a:hover {
+    color: #b2e0e3; /* Lighter teal on hover */
+}
+
+/* Auth Links & User Dropdown Styling */
+.nav-actions {
+    display: flex;
+    align-items: center;
+}
+
+.nav-actions a,
+.nav-actions button {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-links a {
+    margin-right: 1rem;
+}
+
+.auth-links a:hover,
+.register-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.register-button {
+    background-color: #004D40;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* User Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn i {
+    margin-right: 0.5rem;
+}
+
+.dropbtn span {
+    font-weight: 600;
+    font-size: medium;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* Align to the right */
+    background-color: white;
+    min-width: 12rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 0.75rem 1rem;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Arrow for Dropdown */
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 10px; /* Align the arrow to the right */
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+/*.register-button {*/
+/*    background-color: #004D40;*/
+/*    padding: 10px 20px;*/
+/*    border-radius: 5px;*/
+/*}*/
+
+.search-container {
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.search-box {
+    margin-top: 20px;
+    position: relative;
+}
+
+.search-box input, .search-box button {
+    padding: 10px;
+    margin-right: 10px;
+}
+
+
+.search-button {
+    background-color: #00695C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+#guest-selector {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+}
+
+.guest-section {
+    margin-bottom: 10px;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+}
+
+.counter input {
+    text-align: center;
+    margin: 0 5px;
+    width: 40px;
+}
+
+.counter button {
+    padding: 5px 10px;
+    color: #00695C;
+    border: 1px solid #00695C;
+    background: transparent;
+    cursor: pointer;
+}
+
+.toggle input {
+    margin-left: 10px;
+}
+
+.testimonial-section {
+    padding: 50px 0;
+    background-color: #f8f8f8;
+}
+
+.testimonial-container { /* New container for testimonials */
+    overflow: hidden; /* Hide content overflowing the container */
+    margin-top: 20px; /* Add some space between heading and testimonials */
+}
+
+.testimonials {
+    display: flex;
+    animation: slide 15s linear infinite;
+    width: fit-content;
+}
+
+.testimonial {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    flex-shrink: 0; /* Prevent testimonials from shrinking */
+}
+
+.testimonial p {
+    font-style: italic;
+    margin-bottom: 15px;
+}
+
+.testimonial .author {
+    font-weight: bold;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-300px * 3)); /* Adjust translation distance based on the number of testimonials */
+    }
+}
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap; /* Wrap for smaller screens */
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+footer li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.logo {
+    text-decoration: none;  /* Remove underline */
+    color: inherit;          /* Inherit color from parent (or set a specific color) */
+    cursor: pointer;        /* Show pointer cursor on hover */
+}
+
+#suggestions {
+    list-style: none;
+    top: 100%;        /* Position below the input field */
+    left: 0;           /* Align to the left edge of the input field */
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    background-color: #fff;
+    /*border: 1px solid #ccc;*/
+    width: 250px; /* Adjusted width */
+    z-index: 100; /* Increase z-index to ensure it's on top */
+}
+
+#suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left; /* Left-justify text */
+}
+
+#suggestions li:hover {
+    background-color: #f0f0f0;
+}
+
+.search-container {
+    text-align: center;
+    padding: 50px 0;
+}
+
+.search-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+}
+
+.search-box input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-box button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    background-color: #008080;
+    color: white;
+    cursor: pointer;
+}
+
+.guest-button {
+    background-color: white;
+    color: #008080;
+    border: 1px solid #ccc;
+    position: relative;
+}
+
+#guest-selector {
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    position: absolute;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    display: none;
+    flex-direction: column;
+    z-index: 10;
+}
+
+.guest-section {
+    margin-bottom: 10px;
+}
+
+.counter {
+    display: flex;
+    align-items: center;
+}
+
+.counter input {
+    text-align: center;
+    margin: 0 5px;
+    width: 40px;
+}
+
+.counter button {
+    padding: 5px 10px;
+    color: #008080;
+    border: 1px solid #008080;
+    background: transparent;
+    cursor: pointer;
+}
+
+.toggle input {
+    margin-left: 10px;
+}
+
+body {
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%2319B5B8" fill-opacity="0.6" d="M0,64L24,74.7C48,85,96,107,144,128C192,149,240,171,288,192C336,213,384,235,432,224C480,213,528,171,576,138.7C624,107,672,85,720,101.3C768,117,816,171,864,197.3C912,224,960,224,1008,208C1056,192,1104,160,1152,154.7C1200,149,1248,171,1296,165.3C1344,160,1392,128,1416,112L1440,96L1440,0L1416,0C1392,0,1344,0,1296,0C1248,0,1200,0,1152,0C1104,0,1056,0,1008,0C960,0,912,0,864,0C816,0,768,0,720,0C672,0,624,0,576,0C528,0,480,0,432,0C384,0,336,0,288,0C240,0,192,0,144,0C96,0,48,0,24,0L0,0Z"></path></svg>') no-repeat;    z-index: 5;
+}

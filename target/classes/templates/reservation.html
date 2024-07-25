@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation - QuickStay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/reservation.css}">
+</head>
+<body>
+<div class="navbar">
+    <div class="res-container">
+        <a th:href="@{/}" class="logo">QuickStay</a>
+        <div class="nav-actions">
+            <!-- Show if NOT authenticated -->
+            <div sec:authorize="!isAuthenticated()" class="auth-links">
+                <a th:href="@{/login}">Sign in</a>
+                <a th:href="@{/register}" class="register-button">Register</a>
+            </div>
+            <!-- Show if authenticated -->
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <button class="dropbtn">
+                    <i class="fa fa-user"></i>
+                    <span sec:authentication="name">Username</span>
+                </button>
+                <div class="dropdown-content">
+                    <a th:href="@{/my-reservations}">My Reservations</a>
+                    <a th:href="@{/edit-account}">Edit My Account</a>
+                    <a href="@{/logout}" th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h1>Make a Reservation</h1>
+    <form id="reservationForm" th:action="@{/submitReservation}" method="post" th:object="${reservationDTO}" onsubmit="removeDollarSign()">
+        <input type="hidden" th:value="${roomId}" th:field="*{roomId}" />
+        <input type="hidden" th:field="*{totalCost}" />
+        <section class="guest-details">
+            <h2>Guest Details</h2>
+            <div id="guestsContainer" th:each="guest, stat : ${reservationDTO.guests}">
+                <div class="guest-card">
+                    <h3 th:text="'Guest ' + (${stat.index} + 1)"></h3>
+                    <label>First Name:</label>
+                    <input type="text" th:field="*{guests[__${stat.index}__].firstName}" required>
+                    <label>Last Name:</label>
+                    <input type="text" th:field="*{guests[__${stat.index}__].lastName}" required>
+                </div>
+            </div>
+        </section>
+
+        <section class="payment-details">
+            <h2>Payment Information</h2>
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" th:field="*{payment.paymentMethod}" required>
+                <option th:each="method : ${paymentMethods}" th:value="${method}" th:text="${method}">Payment Method</option>
+            </select>
+            <div class="amount">
+                <label for="amount">Amount:</label>
+                <input type="text" id="amount" th:field="*{payment.amount}" th:value="${reservationDTO.totalCost}" readonly>
+            </div>
+        </section>
+
+        <section class="reservation-summary">
+            <h2>Reservation Summary</h2>
+            <label for="startDate">Check-in Date:</label>
+            <input type="date" id="startDate" th:field="*{startDate}" readonly required>
+            <label for="endDate">Check-out Date:</label>
+            <input type="date" id="endDate" th:field="*{endDate}" readonly required>
+            <div class="total-cost">
+                <p><strong>Total Cost:</strong> <span th:text="'$' + *{totalCost}">$1200</span></p>
+            </div>
+        </section>
+        <button type="submit" class="btn-primary">Confirm Reservation</button>
+    </form>
+</div>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function removeDollarSign() {
+        const amountField = document.getElementById('amount');
+        amountField.value = amountField.value.replace('$', '').trim();
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const amountField = document.getElementById('amount');
+        const totalCost = /*[[${reservationDTO.totalCost}]]*/ '0.00';
+        amountField.value = '$' + totalCost;
+    });
+    /*]]>*/
+</script>
+</body>
+</html>

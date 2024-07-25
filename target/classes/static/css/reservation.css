@@ -1,0 +1,239 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    background: #f8f9fa;
+}
+
+/* ------- Navbar Styling ------- */
+.navbar {
+    background-color: #00897B;
+    color: white;
+    padding: 20px 0;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-bottom: 70px;
+    display: flex;             /* Enable flexbox on the navbar */
+    justify-content: space-between; /* Distribute space between logo and buttons */
+    align-items: center;       /* Vertically center items */
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Limit container width for better readability */
+    margin: 0 auto;
+    padding: 0 1rem; /* Add padding for better spacing on smaller screens */
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 600; /* Use a bolder font weight */
+    text-decoration: none;
+    color: white;
+}
+
+/* Navigation Links (Not used in provided HTML, but included for completeness) */
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex; /* Align nav links horizontally */
+}
+
+.nav-list li {
+    margin-left: 1.5rem; /* Space between nav links */
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600; /* Make nav links slightly bolder */
+    transition: color 0.3s ease; /* Add a smooth color transition */
+}
+
+.nav-list a:hover {
+    color: #b2e0e3; /* Lighter teal on hover */
+}
+
+/* Auth Links & User Dropdown Styling */
+.nav-actions {
+    display: flex;
+    align-items: center;
+}
+
+.nav-actions a,
+.nav-actions button {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.auth-links a {
+    margin-right: 1rem;
+}
+
+.auth-links a:hover,
+.register-button:hover {
+    background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+
+.register-button {
+    background-color: #004D40;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* User Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.dropbtn i {
+    margin-right: 0.5rem;
+}
+
+.dropbtn span {
+    font-weight: 600;
+    font-size: medium;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; /* Align to the right */
+    background-color: white;
+    min-width: 12rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 0.75rem 1rem;
+    display: block;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #f2f2f2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Arrow for Dropdown */
+.dropdown-content::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 10px; /* Align the arrow to the right */
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    /*background-color: white;*/
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.res-container {
+    display: flex;
+    justify-content: space-between !important;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+}
+
+h1, h2 {
+    font-weight: 600;
+    color: #333;
+}
+
+.guest-details, .payment-details, .reservation-summary {
+    margin-bottom: 20px;
+}
+
+.guest {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.guest label, .guest input {
+    width: calc(33.33% - 10px);
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    display: block;
+}
+
+input[type="text"], input[type="date"], select {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.btn-secondary, .btn-primary {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-primary {
+    background-color: #28a745;
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+    opacity: 0.9;
+}
+
+.total-cost {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+.total-cost span {
+    color: #28a745;
+}

@@ -52,7 +52,7 @@ public class User implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Guest> guests = new HashSet<>();
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -73,14 +73,19 @@ public class User implements UserDetails {
     private LocalDate lockTime;
 
     @Column(name = "activation_token", length = 64, nullable = false)
-    private String activation_token;
+    private String activationToken;
+
+    @Column(name = "activation_token_expiry", nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDate activationTokenExpiry;
 
     @PrePersist
     protected void onCreate() {
-        this.activation_token = UUID.randomUUID().toString();
+        this.activationToken = UUID.randomUUID().toString();
         this.creationDate = LocalDate.now();
         this.enabled = false;
         this.accountNonLocked = true;
+        this.activationTokenExpiry = this.creationDate.plusDays(1);
         this.failedAttempt = 0;
         this.lockTime = null;
     }

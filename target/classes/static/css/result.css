@@ -1,0 +1,104 @@
+.results-container {
+    margin: 2rem;
+}
+
+.result-card {
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Enhanced shadow */
+    overflow: hidden;  /* Hide image overflow for clean edges */
+    transition: transform 0.2s ease; /* Add a hover transition */
+}
+
+.result-card:hover {
+    transform: translateY(-5px); /* Lift card on hover */
+}
+
+.result-card img {
+    width: 250px; /* Increased image width */
+    height: 200px; /* Increased image height */
+    object-fit: cover; /* Maintain aspect ratio and cover the area */
+}
+
+.result-details {
+    flex: 1; /* Allow result details to take available space */
+    margin-left: 1.5rem;
+}
+
+.result-details h3 {
+    margin: 0 0 0.5rem 0; /* Added bottom margin */
+    font-size: 1.8rem;  /* Larger heading */
+    color: #333;        /* Darker heading color */
+}
+
+.result-details p {
+    margin: 0.5rem 0;
+    color: #555; /* Slightly lighter text color for details */
+}
+
+.result-actions {
+    display: flex;        /* Use flexbox for actions */
+    flex-direction: column; /* Stack actions vertically */
+    align-items: flex-end;  /* Align to the right */
+}
+
+.result-actions a,
+.result-actions button {
+    padding: 8px 15px;     /* Added padding */
+    margin-bottom: 0.5rem;
+    color: white;          /* White text color */
+    text-decoration: none;
+    background-color: #00a699; /* Use your primary color */
+    border: none;
+    border-radius: 5px;    /* Rounded button corners */
+    cursor: pointer;
+    transition: background-color 0.2s ease; /* Add hover transition */
+}
+
+.result-actions a:hover,
+.result-actions button:hover {
+    background-color: #008080; /* Darken color on hover */
+}
+
+.rating {
+    display: inline-flex;   /* Changed to inline-flex */
+    align-items: center;
+    background-color: #00a699;
+    color: white;
+    padding: 0.5rem 1rem;    /* Adjusted padding */
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;      /* Added top margin */
+}
+
+.rating .num-reviews {
+    margin-left: 0.5rem;
+    font-weight: normal;
+}
+
+.map-button {
+    background-color: #ff6600 !important;
+    color: white;
+    padding: 8px 15px;     /* Added padding */
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;    /* Rounded button corners */
+    cursor: pointer;
+    display: flex;
+    align-items: center;   /* Align icon and text */
+    justify-content: center; /* Center icon and text */
+    transition: background-color 0.2s ease; /* Add hover transition */
+}
+
+.map-button:hover {
+    background-color: #cc5200; /* Darker orange on hover */
+}
+
+.map-button i {
+    margin-right: 0.5rem;
+}

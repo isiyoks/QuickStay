@@ -6,6 +6,10 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.sukriyesahin.quickstay.model.reservation.Reservation;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -33,6 +37,9 @@ public class Guest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;  // User who made the reservation
+
+    @ManyToMany(mappedBy = "guests")
+    private Set<Reservation> reservations = new HashSet<>();
 
     public String getFormattedFullName() {
         return capitalize(firstName) + " " + capitalize(lastName);

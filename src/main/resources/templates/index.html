@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to QuickStay</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+</head>
+<body>
+<div class="navbar">
+    <div class="container">
+        <a th:href="@{/}" class="logo">QuickStay</a>
+        <div class="nav-actions">
+            <!-- Show if NOT authenticated -->
+            <div sec:authorize="!isAuthenticated()" class="auth-links">
+                <a th:href="@{/login}">Sign in</a>
+                <a th:href="@{/register}" class="register-button">Register</a>
+            </div>
+            <!-- Show if authenticated -->
+            <div sec:authorize="isAuthenticated()" class="dropdown">
+                <button class="dropbtn">
+                    <i class="fa fa-user"></i>
+                    <span sec:authentication="name">Username</span>
+                </button>
+                <div class="dropdown-content">
+                    <a th:href="@{/my-reservations}">My Reservations</a>
+                    <a th:href="@{/edit-account}">Edit My Account</a>
+                    <a href="@{/logout}" th:href="@{/logout}">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="search-container">
+    <h1>A piece of paradise just for you</h1>
+    <p>Book entire houses, villas, cabins, and more</p>
+    <form th:action="@{/search}" method="get" th:object="${searchDTO}" id="searchForm">
+        <div class="search-box">
+            <input type="hidden" id="latitude" name="latitude" th:field="*{latitude}">
+            <input type="hidden" id="longitude" name="longitude" th:field="*{longitude}">
+            <input type="text" placeholder="Destination" th:field="*{destination}" id="destination">
+            <ul id="suggestions"></ul>
+            <input type="text" placeholder="Check-in & Check-out" th:field="*{dateRange}" id="date-range">
+            <button type="button" class="guest-button" onclick="toggleGuestSelector()">Select Guests</button>
+            <div id="guest-selector">
+                <div class="guest-section">
+                    <label>Adults</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('adults', -1)">-</button>
+                        <input type="text" id="adults" th:field="*{adults}" value="2" readonly>
+                        <button type="button" onclick="adjustCount('adults', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-section">
+                    <label>Children</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('children', -1)">-</button>
+                        <input type="text" id="children" th:field="*{children}" value="0" readonly>
+                        <button type="button" onclick="adjustCount('children', 1)">+</button>
+                    </div>
+                </div>
+                <div class="guest-section">
+                    <label>Rooms</label>
+                    <div class="counter">
+                        <button type="button" onclick="adjustCount('rooms', -1)">-</button>
+                        <input type="text" id="rooms" th:field="*{rooms}" value="1" readonly>
+                        <button type="button" onclick="adjustCount('rooms', 1)">+</button>
+                    </div>
+                </div>
+                <button type="button" class="guest-button" onclick="toggleGuestSelector()">Done</button>
+            </div>
+            <button type="button" class="search-button" onclick="submitSearchForm()">Search</button>
+        </div>
+    </form>
+</div>
+<section class="testimonial-section">
+    <div class="container">
+        <h2>What Our Guests Say</h2>
+        <div class="testimonial-container">
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"Amazing experience! The property was beautiful, and the service was excellent. I would definitely recommend QuickStay."</p>
+                    <div class="author">- John Doe</div>
+                </div>
+                <div class="testimonial">
+                    <p>"QuickStay made finding the perfect vacation rental so easy. The website is user-friendly, and the selection of properties is great."</p>
+                    <div class="author">- Jane Smith</div>
+                </div>
+                <div class="testimonial">
+                    <p>"This was our first time using QuickStay, and we were very impressed. The booking process was smooth, and the customer support was helpful."</p>
+                    <div class="author">- David Lee</div>
+                </div>
+                <div class="testimonial">
+                    <p>"We had a wonderful stay at a cozy cabin booked through QuickStay. The location was perfect, and the amenities were top-notch. We'll definitely be using QuickStay again!"</p>
+                    <div class="author">- Sarah Williams</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="container">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p>Email: info@quickstay.com</p>
+            <p>Phone: +1-555-123-4567</p>
+        </div>
+        <ul class="social-links">
+            <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+        </ul>
+        <div class="copyright">
+            <p>© 2024 QuickStay. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script th:src="@{/js/index.js}"></script>
+<script>
+    function submitSearchForm() {
+        var form = document.getElementById("searchForm");
+        var destination = document.getElementById("destination").value;
+        var dateRange = document.getElementById("date-range").value;
+        var adults = document.getElementById("adults").value;
+        var children = document.getElementById("children").value;
+        var rooms = document.getElementById("rooms").value;
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+
+        var params = new URLSearchParams({
+            destination: destination,
+            dateRange: dateRange,
+            adults: adults,
+            children: children,
+            rooms: rooms,
+            latitude: latitude,
+            longitude: longitude
+        });
+
+        window.location.href = form.action + "?" + params.toString();
+    }
+</script>
+</body>
+</html>

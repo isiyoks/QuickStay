@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${error.title}">Error</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/error.css}">
+</head>
+<body>
+<div class="error-container">
+    <h1 th:text="${error.title}">Error Title</h1>
+    <p th:text="${error.message}">Default error message.</p>
+    <div class="error-details">
+        <p>Status Code: <span th:text="${error.statusCode}">500</span></p>
+        <p th:text="${error.details}">Additional details about the error.</p>
+    </div>
+    <a href="/" class="home-link">Go Back Home</a>
+</div>
+</body>
+</html>
