@@ -31,14 +31,14 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
      */
     @Query(value = "WITH RoomCapacity AS ( " +
             "SELECT r.id AS room_id, r.hotel_id, SUM(b.sleep) AS total_capacity " +
-            "FROM Room r " +
-            "JOIN Room_Bed rb ON r.id = rb.room_id " +
-            "JOIN Bed b ON rb.bed_id = b.id " +
+            "FROM room r " +
+            "JOIN room_bed rb ON r.id = rb.room_id " +
+            "JOIN bed b ON rb.bed_id = b.id " +
             "GROUP BY r.id, r.hotel_id), " +
             "AvailableRooms AS ( " +
             "SELECT rc.room_id, rc.hotel_id, rc.total_capacity " +
             "FROM RoomCapacity rc " +
-            "LEFT JOIN Reservation res ON rc.room_id = res.room_id " +
+            "LEFT JOIN reservation res ON rc.room_id = res.room_id " +
             "AND res.start_date <= :checkOutDate " +
             "AND res.end_date >= :checkInDate " +
             "WHERE res.id IS NULL " +
@@ -46,11 +46,11 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
             "SELECT h.id, h.name, h.stars, a.city, a.state, a.country, a.latitude, a.longitude, " +
             "COUNT(ar.room_id) AS availableRooms, " +
             "AVG(rv.rating) AS avgRating, COUNT(rv.hotel_id) AS numReviews, " +
-            "(SELECT i.id FROM Image i WHERE i.hotel_id = h.id LIMIT 1) AS imageId " +
-            "FROM Hotel h " +
-            "JOIN Address a ON h.address_id = a.id " +
+            "(SELECT i.id FROM image i WHERE i.hotel_id = h.id LIMIT 1) AS imageId " +
+            "FROM hotel h " +
+            "JOIN address a ON h.address_id = a.id " +
             "JOIN AvailableRooms ar ON h.id = ar.hotel_id " +
-            "LEFT JOIN Review rv ON h.id = rv.hotel_id " +
+            "LEFT JOIN review rv ON h.id = rv.hotel_id " +
             "WHERE (6371 * acos(cos(radians(:latitude)) * cos(radians(a.latitude)) * " +
             "cos(radians(a.longitude) - radians(:longitude)) + sin(radians(:latitude)) * " +
             "sin(radians(a.latitude)))) < :radius " +

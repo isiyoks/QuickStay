@@ -7,7 +7,7 @@ import org.sukriyesahin.quickstay.model.user.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2024-07-25T00:02:57-0400",
+    date = "2024-07-25T03:24:55-0400",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 17.0.12 (Amazon.com Inc.)"
 )
 @Component

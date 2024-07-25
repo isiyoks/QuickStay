@@ -46,7 +46,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/process_login", "/logout"))
+//                .csrf(csrf -> csrf.ignoringRequestMatchers("/process_login", "/logout"))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/",
                                 "/login",
@@ -74,12 +74,7 @@ public class SecurityConfig {
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true)
                         .invalidateHttpSession(true)
-                        .permitAll())
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                        .maximumSessions(1)
-                        .maxSessionsPreventsLogin(true)
-                );
+                        .permitAll());
         return http.build();
     }
 
